@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.6725521669341894" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.prog3.subastasquindio.controladores.ControladorAnuncios">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TextField fx:id="txtNombreAnuncio" layoutX="14.0" layoutY="30.0" prefHeight="25.0" prefWidth="250.0" promptText="Nombre del Anuncio" />
+            <ImageView fx:id="imgView" fitHeight="193.0" fitWidth="310.0" layoutX="276.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="395.0" layoutY="217.0" mnemonicParsing="false" onAction="#SubirImagen" text="Subir Imagen" />
+            <TextArea fx:id="txtDescripcionAnuncio" layoutX="14.0" layoutY="140.0" prefHeight="60.0" prefWidth="250.0" promptText="Descripcion del Producto" />
+            <DatePicker fx:id="txtFechaFinalizacionAnuncio" layoutX="14.0" layoutY="230.0" prefWidth="250.0" promptText="Fecha de Finalizacion" />
+            <TextField fx:id="txtValorInicialAnuncio" layoutX="14.0" layoutY="285.0" prefWidth="250.0" promptText="Valor Inicial" />
+            <Button fx:id="btnPublicarAnuncio" layoutX="290.0" layoutY="300.0" mnemonicParsing="false" onAction="#PublicarAnuncio" prefWidth="66.0" text="Publicar" />
+            <Button fx:id="btnEditarAnuncio" layoutX="365.0" layoutY="300.0" mnemonicParsing="false" onAction="#EditarAnuncio" prefWidth="66.0" text="Editar" />
+            <Button fx:id="btnEliminarAnuncio" layoutX="440.0" layoutY="300.0" mnemonicParsing="false" onAction="#EliminarAnuncio" prefWidth="66.0" text="Eliminar" />
+            <Button fx:id="btnCancelar" layoutX="515.0" layoutY="300.0" mnemonicParsing="false" onAction="#Cancelar" prefHeight="26.0" prefWidth="66.0" text="Cancelar" />
+            <ChoiceBox fx:id="cbTipoProducto" layoutX="14.0" layoutY="85.0" prefHeight="26.0" prefWidth="250.0" />
+            <Label fx:id="lblAnuncio" layoutX="289.0" layoutY="256.0" prefHeight="38.0" prefWidth="294.0" wrapText="true" />
+            <Label fx:id="lblRutaImagen" layoutX="422.0" layoutY="247.0" text="Label" visible="false" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TableView fx:id="tablaAnuncios" prefHeight="171.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="columnaNombreAnuncio" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="columnaTipoProducto" prefWidth="75.0" text="Tipo" />
+                  <TableColumn fx:id="columnaDescripcionAnuncio" prefWidth="75.0" text="Descripcion" />
+                  <TableColumn fx:id="columnaFechaInicio" prefWidth="75.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="columnaFechaFinalizacion" prefWidth="75.0" text="Fecha Finalizacion" />
+                  <TableColumn fx:id="columnaValorInicial" prefWidth="75.0" text="Valor Inicial" />
+                  <TableColumn fx:id="columnaEstadoAnuncio" prefWidth="75.0" text="Estado Anuncio" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

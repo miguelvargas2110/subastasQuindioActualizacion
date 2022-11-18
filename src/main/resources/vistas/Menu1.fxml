@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.prog3.subastasquindio.controladores.ControladorMenu1">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Pane prefHeight="41.0" prefWidth="600.0" style="-fx-background-color: #00CDFF;">
+               <children>
+                  <Button fx:id="btnRegistro" layoutX="428.0" layoutY="9.0" minWidth="0.0" mnemonicParsing="false" onAction="#onActionRegistro" style="-fx-background-color: #00CDFF;" text="Registrate">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnIngresa" layoutX="519.0" layoutY="9.0" minWidth="0.0" mnemonicParsing="false" onAction="#onActionLogin" prefHeight="23.0" prefWidth="66.0" style="-fx-background-color: #00CDFF;" text="Ingresa">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnRefrescar" layoutX="261.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionRefrescar" style="-fx-background-color: #00CDFF;" text="Refrescar">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lblNombreUsuario" layoutX="389.0" layoutY="12.0" textAlignment="RIGHT" />
+                  <Button fx:id="btnNombreCrud" layoutY="9.0" minWidth="0.0" mnemonicParsing="false" onAction="#abrir" prefHeight="25.0" prefWidth="0.0" style="-fx-background-color: #00CDFF;">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnLogOut" layoutY="9.0" minWidth="0.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="0.0" style="-fx-background-color: #00CDFF;">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
+            <TableView fx:id="tablaAnunciosMenu" layoutY="41.0" prefHeight="356.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+              <columns>
+                <TableColumn fx:id="columnaNombreAnuncio" prefWidth="116.79998779296875" text="Nombre Anuncio" />
+                <TableColumn fx:id="columnaNombreAnunciante" prefWidth="96.0" text="Nombre Anunciante" />
+                  <TableColumn fx:id="columnaFechaInicio" prefWidth="75.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="columnaFechaFinalizacion" prefWidth="75.0" text="Fecha Finalizacion" />
+                  <TableColumn fx:id="columnaValorInicial" prefWidth="75.0" text="Valor Inicial" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children></Pane>
+   </children>
+</AnchorPane>

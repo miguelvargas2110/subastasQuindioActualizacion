@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.6725521669341894" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.prog3.subastasquindio.controladores.ControladorPujas">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <ImageView fitHeight="193.0" fitWidth="310.0" layoutX="276.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+            <TextField fx:id="txtValorPuja" disable="true" layoutX="141.0" layoutY="288.0" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" prefWidth="120.0" />
+            <Button fx:id="btnEditar" layoutX="308.0" layoutY="250.0" mnemonicParsing="false" onAction="#EditarPuja" prefWidth="66.0" text="Editar" />
+            <Button fx:id="btnEliminar" layoutX="398.0" layoutY="250.0" mnemonicParsing="false" onAction="#EliminarPuja" prefWidth="66.0" text="Eliminar" />
+            <Button layoutX="491.0" layoutY="249.0" mnemonicParsing="false" onAction="#Cancelar" prefHeight="26.0" prefWidth="66.0" text="Cancelar" />
+            <Label layoutX="14.0" layoutY="25.0" prefHeight="20.0" prefWidth="120.0" text="Nombre del Anuncio:" />
+            <Label layoutX="14.0" layoutY="70.0" prefHeight="20.0" prefWidth="120.0" text="Tipo del Producto:" />
+            <Label layoutX="14.0" layoutY="115.0" prefHeight="60.0" prefWidth="120.0" text="Descripcion" />
+            <Label layoutX="14.0" layoutY="198.0" prefHeight="20.0" prefWidth="120.0" text="Fecha de inicio:" />
+            <Label layoutX="14.0" layoutY="243.0" prefHeight="20.0" prefWidth="120.0" text="Fecha de Finzalicacion:" />
+            <Label layoutX="14.0" layoutY="288.0" prefHeight="20.0" prefWidth="120.0" text="Valor de la puja:" />
+            <Label fx:id="nombreAnuncio" layoutX="141.0" layoutY="27.0" />
+            <Label fx:id="tipoProducto" layoutX="141.0" layoutY="72.0" />
+            <TextArea fx:id="descripcion" editable="false" layoutX="141.0" layoutY="115.0" prefHeight="60.0" prefWidth="120.0" />
+            <Label fx:id="fechaInicio" layoutX="141.0" layoutY="200.0" />
+            <Label fx:id="fechaFin" layoutX="141.0" layoutY="245.0" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TableView fx:id="tablaPujas" prefHeight="171.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="columnaNombreAnuncio" prefWidth="75.0" text="Nombre Anuncio" />
+                <TableColumn fx:id="columnaValorInicial" prefWidth="75.0" text="Valor Inicial" />
+                  <TableColumn fx:id="columnaTipoProducto" prefWidth="75.0" text="Tipo Producto" />
+                  <TableColumn fx:id="columnaFechaInicio" prefWidth="75.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="columnaFechaFin" prefWidth="75.0" text="Fecha Fin" />
+                  <TableColumn fx:id="columnaValorPujado" prefWidth="75.0" text="ValorPujado" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

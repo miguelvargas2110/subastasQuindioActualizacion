@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="370.0" prefWidth="370.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.prog3.subastasquindio.controladores.ControladorRegistro">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label text="Registrate">
+        <font>
+            <Font name="Arial" size="24.0" />
+        </font>
+    </Label>
+    <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="460.0">
+        <children>
+            <TextField fx:id="correoUsuario" prefHeight="26.0" prefWidth="357.0" promptText="Correo" />
+        </children></HBox>
+   <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="460.0">
+      <children>
+         <TextField fx:id="nombreUsuario" prefHeight="26.0" prefWidth="357.0" promptText="Nombre" />
+      </children>
+   </HBox>
+    <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="460.0">
+        <children>
+            <PasswordField fx:id="contrasenaUsuario" prefHeight="26.0" prefWidth="357.0" promptText="Contraseña" />
+        </children>
+    </HBox>
+   <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="200.0" spacing="55.0">
+      <children>
+         <Group />
+         <RadioButton fx:id="rbAnunciante" mnemonicParsing="false" text="Anunciante">
+            <toggleGroup>
+               <ToggleGroup fx:id="TipoUsuario" />
+            </toggleGroup></RadioButton>
+         <RadioButton fx:id="rbComprador" mnemonicParsing="false" text="Comprador" toggleGroup="$TipoUsuario" />
+      </children>
+   </HBox>
+   <Label fx:id="lblRegistro" wrapText="true" />
+    <Button onAction="#onActionRegistrarse" prefHeight="26.0" prefWidth="357.0" text="Registrarse" />
+</VBox>
