@@ -1,6 +1,7 @@
 package co.uniquindio.prog3.subastasquindio.controladores;
 
 import co.uniquindio.prog3.subastasquindio.aplicacion.Aplicacion;
+import co.uniquindio.prog3.subastasquindio.excepciones.ExcepcionLimitePujas;
 import co.uniquindio.prog3.subastasquindio.excepciones.ExcepcionPujaNegativa;
 import co.uniquindio.prog3.subastasquindio.excepciones.ExcepcionUsuarioNoRegistrado;
 import co.uniquindio.prog3.subastasquindio.modelo.Puja;
@@ -58,6 +59,7 @@ public class ControladorTransaccional implements Initializable {
     private void Pujar() throws IOException {
         try {
             validarUsuarioLogueado();
+            validarPujas();
             Double.parseDouble(txtValorPujar.getText());
             ControladorModelFactory.getInstance().validarValorPuja(Double.parseDouble(txtValorPujar.getText()), ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal().getValorInicial());
             Puja puja = ControladorModelFactory.getInstance().crearPuja(Double.parseDouble(txtValorPujar.getText()), ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal().getNombreAnuncio(), ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalComprador().getNombre(), ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal());
@@ -70,6 +72,9 @@ public class ControladorTransaccional implements Initializable {
             ControladorModelFactory.getInstance().guardarRegistroLog("Ha salado una excepcion de valor menor de valor inicial", 2, excepcionPujaNegativa.toString());
         } catch (NumberFormatException e) {
             ControladorModelFactory.getInstance().guardarRegistroLog("Ha saltado una excepcion  en el valor de la puja", 2, e.toString());
+        } catch (ExcepcionLimitePujas e) {
+            lblPuja.setText("Usted ya ha pujado en este anuncio 3 veces");
+            ControladorModelFactory.getInstance().guardarRegistroLog("Ha saltado una excepcion que consiste en superar el limite de pujas", 2, e.toString());
         } catch (ExcepcionUsuarioNoRegistrado e) {
             ControladorModelFactory.getInstance().guardarRegistroLog("El usuario no esta registrado e intento hacer una puja", 2, e.toString());
             Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION);
@@ -98,6 +103,20 @@ public class ControladorTransaccional implements Initializable {
         if (ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalComprador() == null) {
             throw new ExcepcionUsuarioNoRegistrado();
         }
+    }
+
+    private void validarPujas() throws ExcepcionLimitePujas {
+        int pujasAnuncio = 0;
+        for (Puja puja : ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalComprador().getPujas()) {
+
+            if (ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal().equals(puja.getAnuncioAsociado())) {
+                pujasAnuncio++;
+            }
+            if (pujasAnuncio > 2) {
+                throw new ExcepcionLimitePujas();
+            }
+        }
+
     }
 
     private void inicializarTabla() {
