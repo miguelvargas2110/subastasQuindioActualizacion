@@ -190,9 +190,13 @@ public class ControladorPujas implements Initializable {
             fechaFin.setText(puja.getAnuncioAsociado().getFechaCaducidad());
             txtValorPuja.setText(String.valueOf(puja.getValorPuja()));
 
-            txtValorPuja.setDisable(false);
-            btnEliminar.setDisable(false);
-            btnEditar.setDisable(false);
+            if(puja.getAnuncioAsociado().getEstadoAnuncio().equals("Activo")){
+                txtValorPuja.setDisable(false);
+                btnEliminar.setDisable(false);
+                btnEditar.setDisable(false);
+            }
+
+
 
         }
 

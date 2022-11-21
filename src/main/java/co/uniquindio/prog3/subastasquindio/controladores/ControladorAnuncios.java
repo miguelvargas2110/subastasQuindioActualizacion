@@ -31,8 +31,9 @@ import java.util.*;
 public class ControladorAnuncios implements Initializable {
     ObservableList<String> opcionesChoiceBox = FXCollections.observableArrayList();
     ArrayList<String> tipoProductos = ControladorModelFactory.getInstance().cargarTipoProductos();
-    Stage stage = new Stage();
+    Stage stage;
     ObservableList<Anuncio> anuncios;
+    String rutaImagen;
     String nombreUsuario = ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre();
     @FXML
     private ChoiceBox cbTipoProducto;
@@ -70,6 +71,10 @@ public class ControladorAnuncios implements Initializable {
     private Button btnEditarAnuncio;
     @FXML
     private Button btnEliminarAnuncio;
+    @FXML
+    private Button btnFinalizarAnuncio;
+    @FXML
+    private Button btnSubirImagen;
 
     Aplicacion aplicacion = new Aplicacion();
 
@@ -103,6 +108,7 @@ public class ControladorAnuncios implements Initializable {
      */
     @FXML
     private void PublicarAnuncio() throws ExcepcionFechaAnuncioInvalida, IOException {
+        lblAnuncio.setText("");
         if (txtNombreAnuncio.getText() != "" && txtDescripcionAnuncio.getText() != "" && txtFechaFinalizacionAnuncio.getValue() != null && txtValorInicialAnuncio.getText() != "") {
             boolean ok = true;
             try {
@@ -120,8 +126,8 @@ public class ControladorAnuncios implements Initializable {
                 ok = false;
             }
             if (ok && lblRutaImagen.getText() != "") {
-                Anuncio anuncio = ControladorModelFactory.getInstance().crearAnuncio(nombreUsuario, txtNombreAnuncio.getText(), cbTipoProducto.getValue().toString(), txtDescripcionAnuncio.getText(), txtFechaFinalizacionAnuncio.getValue().toString(), Double.valueOf(txtValorInicialAnuncio.getText()), lblRutaImagen.getText());
                 guardarImagen();
+                Anuncio anuncio = ControladorModelFactory.getInstance().crearAnuncio(nombreUsuario, txtNombreAnuncio.getText(), cbTipoProducto.getValue().toString(), txtDescripcionAnuncio.getText(), txtFechaFinalizacionAnuncio.getValue().toString(), Double.valueOf(txtValorInicialAnuncio.getText()), rutaImagen, "Activo");
                 ControladorModelFactory.getInstance().guardarAnuncio(anuncio);
                 ControladorModelFactory.getInstance().guardarAnuncioArchivo(anuncio, nombreUsuario);
                 lblAnuncio.setText("Se ha publicado el anuncio");
@@ -138,7 +144,8 @@ public class ControladorAnuncios implements Initializable {
     private void guardarImagen() {
         try {
             Path origenPath = FileSystems.getDefault().getPath(lblRutaImagen.getText());
-            Path destinoPath = FileSystems.getDefault().getPath("src/main/resources/persistencia/archivos/imagenesProductos/" + txtNombreAnuncio.getText() + "." + obtenerExtension());
+            rutaImagen = "src/main/resources/persistencia/archivos/imagenesProductos/" + txtNombreAnuncio.getText() + "." + obtenerExtension();
+            Path destinoPath = FileSystems.getDefault().getPath(rutaImagen);
             Files.copy(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,6 +194,8 @@ public class ControladorAnuncios implements Initializable {
     @FXML
     private void EliminarAnuncio() throws IOException {
 
+        lblAnuncio.setText("");
+
         Anuncio anuncioSeleccionado = getTablaAnuncioSeleccionado();
 
         ControladorModelFactory.getInstance().eliminarAnuncioArchivo(anuncioSeleccionado);
@@ -208,10 +217,12 @@ public class ControladorAnuncios implements Initializable {
     @FXML
     private void EditarAnuncio() throws IOException {
 
+        lblAnuncio.setText("");
+
         Anuncio anuncioSeleccionado = getTablaAnuncioSeleccionado();
 
         if (txtNombreAnuncio.getText() != "" && txtDescripcionAnuncio.getText() != "" && txtFechaFinalizacionAnuncio.getValue() != null && txtValorInicialAnuncio.getText() != "") {
-            if (anuncioSeleccionado.estadoAnuncio.getValue().equals(true)) {
+            if (anuncioSeleccionado.getEstadoAnuncio().equals("Activo")) {
                 boolean ok = true;
                 try {
                     validarFecha(txtFechaFinalizacionAnuncio.getValue());
@@ -228,13 +239,13 @@ public class ControladorAnuncios implements Initializable {
                     ok = false;
                 }
                 if (ok && lblRutaImagen.getText() != "") {
-                    Anuncio anuncio = ControladorModelFactory.getInstance().crearAnuncio(nombreUsuario, txtNombreAnuncio.getText(), cbTipoProducto.getValue().toString(), txtDescripcionAnuncio.getText(), txtFechaFinalizacionAnuncio.getValue().toString(), Double.valueOf(txtValorInicialAnuncio.getText()), lblRutaImagen.getText());
+                    Anuncio anuncio = ControladorModelFactory.getInstance().crearAnuncio(nombreUsuario, txtNombreAnuncio.getText(), cbTipoProducto.getValue().toString(), txtDescripcionAnuncio.getText(), txtFechaFinalizacionAnuncio.getValue().toString(), Double.valueOf(txtValorInicialAnuncio.getText()), lblRutaImagen.getText(), "Activo");
                     ControladorModelFactory.getInstance().editarAnuncioArchivo(anuncioSeleccionado, anuncio, nombreUsuario);
                     guardarImagen();
                     lblAnuncio.setText("Se ha editado el anuncio");
+                    Cancelar();
                     ControladorModelFactory.getInstance().guardarRegistroLog("Se ha editado el anuncio " + txtNombreAnuncio.getText() + " por el ususario " + ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre(), 1, "editarAnuncio");
                     this.inicializarTabla();
-                    Cancelar();
                 }
             }
         }
@@ -258,6 +269,15 @@ public class ControladorAnuncios implements Initializable {
         btnPublicarAnuncio.setDisable(false);
         btnEditarAnuncio.setDisable(true);
         btnEliminarAnuncio.setDisable(true);
+        btnFinalizarAnuncio.setDisable(true);
+        btnFinalizarAnuncio.setVisible(false);
+        btnSubirImagen.setDisable(false);
+
+        txtNombreAnuncio.setEditable(true);
+        cbTipoProducto.setDisable(false);
+        txtDescripcionAnuncio.setEditable(true);
+        txtFechaFinalizacionAnuncio.setEditable(true);
+        txtValorInicialAnuncio.setEditable(true);
 
     }
 
@@ -283,6 +303,34 @@ public class ControladorAnuncios implements Initializable {
             imgView.setImage(image);
 
         }
+
+
+    }
+
+    @FXML
+    private void FinalizarAnuncio() throws IOException {
+
+        lblAnuncio.setText("");
+
+        Anuncio anuncioSeleccionado = getTablaAnuncioSeleccionado();
+
+        String finalizarAnuncio = "";
+
+        if(anuncioSeleccionado.getPujas() != null){
+            finalizarAnuncio = "Esperando";
+        }else{
+            finalizarAnuncio = "Finalizado";
+        }
+
+        Anuncio anuncio = ControladorModelFactory.getInstance().crearAnuncio(nombreUsuario, txtNombreAnuncio.getText(), cbTipoProducto.getValue().toString(), txtDescripcionAnuncio.getText(), txtFechaFinalizacionAnuncio.getValue().toString(), Double.valueOf(txtValorInicialAnuncio.getText()), lblRutaImagen.getText(), finalizarAnuncio);
+        ControladorModelFactory.getInstance().editarAnuncioArchivo(anuncioSeleccionado, anuncio, nombreUsuario);
+
+        Cancelar();
+
+        this.inicializarTabla();
+
+        lblAnuncio.setText("Se ha finalizado el anuncio");
+
     }
 
     /**
@@ -355,13 +403,24 @@ public class ControladorAnuncios implements Initializable {
             txtFechaFinalizacionAnuncio.setValue(LocalDate.parse(formato.format(fecha)));
             txtValorInicialAnuncio.setText(String.valueOf(anuncio.getValorInicial()));
 
-            btnPublicarAnuncio.setDisable(true);
-            btnEditarAnuncio.setDisable(false);
-            btnEliminarAnuncio.setDisable(false);
-
+            if(anuncio.getEstadoAnuncio().equals("Finalizado") || anuncio.getEstadoAnuncio().equals("Esperando")){
+                btnPublicarAnuncio.setDisable(true);
+                btnSubirImagen.setDisable(true);
+                txtNombreAnuncio.setEditable(false);
+                cbTipoProducto.setDisable(true);
+                txtDescripcionAnuncio.setEditable(false);
+                txtFechaFinalizacionAnuncio.setEditable(false);
+                txtValorInicialAnuncio.setEditable(false);
+            }else{
+                btnPublicarAnuncio.setDisable(true);
+                btnEditarAnuncio.setDisable(false);
+                btnEliminarAnuncio.setDisable(false);
+                btnFinalizarAnuncio.setVisible(true);
+                btnFinalizarAnuncio.setDisable(false);
+            }
         }
 
-        if (txtFechaFinalizacionAnuncio.getValue().isBefore(LocalDate.now()) && anuncio.getEstadoAnuncio()){
+        if (anuncio.getEstadoAnuncio().equals("Esperando")){
             Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION);
             dialogoAlerta.setTitle("");
             dialogoAlerta.setHeaderText("");
@@ -372,8 +431,8 @@ public class ControladorAnuncios implements Initializable {
             Optional<ButtonType> opciones = dialogoAlerta.showAndWait();
             if (opciones.get() == btnElegirPuja) {
                 aplicacion.Transaccional2();
-                Cancelar();
-                inicializarTabla();
+                ControladorVentas.setAnuncio(anuncio);
+                this.stage.close();
             }
         }
 
@@ -396,7 +455,16 @@ public class ControladorAnuncios implements Initializable {
         final ObservableList<Anuncio> tablaAnuncioSel = tablaAnuncios.getSelectionModel().getSelectedItems();
         tablaAnuncioSel.addListener(selectorTablaAnuncios);
 
-        btnEditarAnuncio.setDisable(true);
-        btnEliminarAnuncio.setDisable(true);
+        Cancelar();
+
+        try {
+            ControladorModelFactory.getInstance().getSubastasQuindio().verificarAnuncios();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

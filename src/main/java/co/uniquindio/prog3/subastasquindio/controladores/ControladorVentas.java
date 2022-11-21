@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class ControladorVentas implements Initializable {
 
+    static Anuncio anuncioGlobal;
+
     @FXML
     Label lblNombreAnunciante;
     @FXML
@@ -52,6 +54,10 @@ public class ControladorVentas implements Initializable {
     Stage stage;
     Aplicacion aplicacion = new Aplicacion();
 
+    public static void setAnuncio(Anuncio anuncio) {
+        anuncioGlobal = anuncio;
+    }
+
     /**
      * Metodo que crea la puja por cierto anuncio
      *
@@ -60,14 +66,22 @@ public class ControladorVentas implements Initializable {
     @FXML
     private void elegirPuja() throws IOException {
         final Puja puja = getTablaPujaSeleccionada();
-        Venta venta = ControladorModelFactory.getInstance().crearVenta(puja.getNombreComprador(), ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre(), puja.getAnuncioAsociado().getNombreAnuncio(), puja.valorPuja.toString());
+        Venta venta = ControladorModelFactory.getInstance().crearVenta(puja.getNombreComprador(), ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre(), puja.getAnuncioAsociado().getNombreAnuncio(), String.valueOf(puja.getValorPuja()));
         ControladorModelFactory.getInstance().guardarVentaArchivo(venta);
         lblPuja.setText("Se ha elegido exitosamente, se notificara al comprador para que se efectue el proceso de compra");
         ControladorModelFactory.getInstance().guardarRegistroLog(" se ha guardado la venta exitosamente", 1, "guardarVenta");
-        Anuncio anuncio = puja.getAnuncioAsociado();
-        puja.getAnuncioAsociado().setEstadoAnuncio(false);
-        ControladorModelFactory.getInstance().editarAnuncioArchivo(anuncio, puja.getAnuncioAsociado(), ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre());
+
+        anuncioGlobal.setEstadoAnuncio("Finalizado");
+
+        for(int i = 0; i< ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal().getPujas().size(); i++){
+            ControladorModelFactory.getInstance().getSubastasQuindio().getAnuncioGlobal().getPujas().get(i).setAnuncioAsociado(anuncioGlobal);
+        }
+
+        ControladorModelFactory.getInstance().editarAnuncioArchivo(anuncioGlobal, anuncioGlobal, anuncioGlobal.getNombreAnunciante());
+
         this.stage.close();
+
+        aplicacion.Anuncio();
 
     }
 

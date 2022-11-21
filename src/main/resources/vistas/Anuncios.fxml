@@ -10,7 +10,7 @@
          <children>
             <TextField fx:id="txtNombreAnuncio" layoutX="14.0" layoutY="30.0" prefHeight="25.0" prefWidth="250.0" promptText="Nombre del Anuncio" />
             <ImageView fx:id="imgView" fitHeight="193.0" fitWidth="310.0" layoutX="276.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="395.0" layoutY="217.0" mnemonicParsing="false" onAction="#SubirImagen" text="Subir Imagen" />
+            <Button fx:id="btnSubirImagen" layoutX="395.0" layoutY="217.0" mnemonicParsing="false" onAction="#SubirImagen" text="Subir Imagen" />
             <TextArea fx:id="txtDescripcionAnuncio" layoutX="14.0" layoutY="140.0" prefHeight="60.0" prefWidth="250.0" promptText="Descripcion del Producto" />
             <DatePicker fx:id="txtFechaFinalizacionAnuncio" layoutX="14.0" layoutY="230.0" prefWidth="250.0" promptText="Fecha de Finalizacion" />
             <TextField fx:id="txtValorInicialAnuncio" layoutX="14.0" layoutY="285.0" prefWidth="250.0" promptText="Valor Inicial" />
@@ -21,6 +21,7 @@
             <ChoiceBox fx:id="cbTipoProducto" layoutX="14.0" layoutY="85.0" prefHeight="26.0" prefWidth="250.0" />
             <Label fx:id="lblAnuncio" layoutX="289.0" layoutY="256.0" prefHeight="38.0" prefWidth="294.0" wrapText="true" />
             <Label fx:id="lblRutaImagen" layoutX="422.0" layoutY="247.0" text="Label" visible="false" />
+            <Button fx:id="btnFinalizarAnuncio" layoutX="383.0" layoutY="260.0" mnemonicParsing="false" onAction="#FinalizarAnuncio" text="Finalizar Anuncio" visible="false" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>

@@ -132,14 +132,15 @@ public class ControladorModelFactory {
 
     }
 
-    public Anuncio crearAnuncio(String nombreAnunciante, String nombreAnuncio, String tipoProducto, String descripcion, String fechaCaducidad, Double valorInicial, String rutaImagen) {
+    public Anuncio crearAnuncio(String nombreAnunciante, String nombreAnuncio, String tipoProducto, String descripcion, String fechaCaducidad, Double valorInicial, String rutaImagen, String estadoAnuncio) {
 
         Anuncio anuncio;
 
-        anuncio = getSubastasQuindio().crearAnuncio(nombreAnunciante, nombreAnuncio, tipoProducto, descripcion, fechaCaducidad, valorInicial, rutaImagen);
+        anuncio = getSubastasQuindio().crearAnuncio(nombreAnunciante, nombreAnuncio, tipoProducto, descripcion, fechaCaducidad, valorInicial, rutaImagen, estadoAnuncio);
 
         return anuncio;
     }
+
 
     public void guardarAnuncioArchivo(Anuncio anuncio, String nombre) throws IOException {
 

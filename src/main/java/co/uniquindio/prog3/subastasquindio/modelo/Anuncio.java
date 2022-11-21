@@ -18,7 +18,7 @@ public class Anuncio implements Serializable {
     public transient SimpleStringProperty fechaPublicacion = new SimpleStringProperty();
     public transient SimpleStringProperty fechaCaducidad = new SimpleStringProperty();
     public transient SimpleDoubleProperty valorInicial = new SimpleDoubleProperty();
-    public transient SimpleBooleanProperty estadoAnuncio = new SimpleBooleanProperty();
+    public transient SimpleStringProperty estadoAnuncio = new SimpleStringProperty();
     public transient SimpleObjectProperty<ArrayList<Puja>> pujas = new SimpleObjectProperty<>();
 
     public Anuncio() {
@@ -120,13 +120,13 @@ public class Anuncio implements Serializable {
 
     }
 
-    public boolean getEstadoAnuncio() {
+    public String getEstadoAnuncio() {
 
         return estadoAnuncio.get();
 
     }
 
-    public void setEstadoAnuncio(boolean estadoAnuncio) {
+    public void setEstadoAnuncio(String estadoAnuncio) {
 
         this.estadoAnuncio.set(estadoAnuncio);
 

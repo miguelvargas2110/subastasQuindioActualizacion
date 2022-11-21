@@ -33,7 +33,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnPujar" layoutX="449.0" layoutY="109.0" mnemonicParsing="false" onAction="#elegirPuja" text="Pujar" />
+            <Button fx:id="btnPujar" layoutX="443.0" layoutY="73.0" mnemonicParsing="false" onAction="#elegirPuja" text="Escoger" />
             <Label fx:id="lblPuja" alignment="CENTER" layoutX="359.0" layoutY="9.0" prefHeight="35.0" prefWidth="226.0" textAlignment="JUSTIFY" wrapText="true" />
          </children></AnchorPane>
   </items>

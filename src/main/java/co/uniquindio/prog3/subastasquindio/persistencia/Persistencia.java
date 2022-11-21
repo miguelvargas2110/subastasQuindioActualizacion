@@ -184,7 +184,7 @@ public class Persistencia {
                 anuncio.setFechaPublicacion(linea.split("@@")[4]);
                 anuncio.setFechaCaducidad(linea.split("@@")[5]);
                 anuncio.setValorInicial(Double.parseDouble(linea.split("@@")[6]));
-                anuncio.setEstadoAnuncio(Boolean.parseBoolean(linea.split("@@")[7]));
+                anuncio.setEstadoAnuncio(linea.split("@@")[7]);
                 pujas = cargarPujasAnuncio(anuncio);
                 anuncio.setPujas(pujas);
                 anuncios.add(anuncio);
@@ -223,7 +223,7 @@ public class Persistencia {
                         anuncio.setFechaPublicacion(lineaAnuncio.split("@@")[4]);
                         anuncio.setFechaCaducidad(lineaAnuncio.split("@@")[5]);
                         anuncio.setValorInicial(Double.parseDouble(lineaAnuncio.split("@@")[6]));
-                        anuncio.setEstadoAnuncio(Boolean.parseBoolean(lineaAnuncio.split("@@")[7]));
+                        anuncio.setEstadoAnuncio(lineaAnuncio.split("@@")[7]);
                         puja.setAnuncioAsociado(anuncio);
                     }
                 }

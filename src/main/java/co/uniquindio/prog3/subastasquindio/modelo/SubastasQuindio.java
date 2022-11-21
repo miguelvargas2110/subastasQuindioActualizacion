@@ -3,6 +3,7 @@ package co.uniquindio.prog3.subastasquindio.modelo;
 import javafx.stage.Stage;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -133,7 +134,7 @@ public class SubastasQuindio implements Serializable {
 
     }
 
-    public Anuncio crearAnuncio(String nombreAnunciante, String nombreAnuncio, String tipoProducto, String descripcion, String fechaCaducidad, Double valorInicial, String rutaImagen) {
+    public Anuncio crearAnuncio(String nombreAnunciante, String nombreAnuncio, String tipoProducto, String descripcion, String fechaCaducidad, Double valorInicial, String rutaImagen, String estadoAnuncio) {
 
         Anuncio anuncio = new Anuncio();
 
@@ -144,8 +145,8 @@ public class SubastasQuindio implements Serializable {
         anuncio.setFechaPublicacion(String.valueOf(LocalDate.now()));
         anuncio.setFechaCaducidad(fechaCaducidad);
         anuncio.setValorInicial(valorInicial);
-        anuncio.setEstadoAnuncio(true);
         anuncio.setFoto(rutaImagen);
+        anuncio.setEstadoAnuncio(estadoAnuncio);
 
         return anuncio;
     }
@@ -189,6 +190,15 @@ public class SubastasQuindio implements Serializable {
 
         return puja;
 
+    }
+
+    public void verificarAnuncios() throws ParseException {
+        for(int i = 0; i < listaAnuncios.size(); i++){
+            LocalDate fecha = LocalDate.parse(listaAnuncios.get(i).getFechaCaducidad());
+            if(fecha.isBefore(LocalDate.now()) && !listaAnuncios.get(i).getEstadoAnuncio().equals("Finalizado")){
+                listaAnuncios.get(i).setEstadoAnuncio("Esperando");
+            }
+        }
     }
 
     public void guardarPuja(Puja puja, String nombreAnuncio) {

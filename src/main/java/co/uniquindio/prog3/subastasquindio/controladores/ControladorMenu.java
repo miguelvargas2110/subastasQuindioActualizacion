@@ -14,7 +14,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -65,7 +67,10 @@ public class ControladorMenu implements Initializable {
         aplicacion.Registro();
     }
 
-    public void onActionRefrescar() {
+    public void onActionRefrescar() throws ParseException {
+
+        ControladorModelFactory.getInstance().getSubastasQuindio().verificarAnuncios();
+
         inicializarTabla();
     }
 
@@ -81,7 +86,12 @@ public class ControladorMenu implements Initializable {
 
         anuncios = FXCollections.observableArrayList();
         if (ControladorModelFactory.getInstance().getSubastasQuindio().getListaAnuncios() != null) {
-            anuncios.addAll(ControladorModelFactory.getInstance().getSubastasQuindio().getListaAnuncios());
+            for(int i = 0; i < ControladorModelFactory.getInstance().getSubastasQuindio().getListaAnuncios().size(); i++){
+                if(ControladorModelFactory.getInstance().getSubastasQuindio().getListaAnuncios().get(i).getEstadoAnuncio().equals("Activo")){
+                    anuncios.add(ControladorModelFactory.getInstance().getSubastasQuindio().getListaAnuncios().get(i));
+                }
+            }
+
         }
 
         columnaNombreAnuncio.setCellValueFactory(new PropertyValueFactory<Anuncio, String>("nombreAnuncio"));
@@ -141,7 +151,7 @@ public class ControladorMenu implements Initializable {
      * Al presionar un boton abre la ventana de Pujas o de Anuncio segun sea el usuario que se registro
      */
     @FXML
-    private void abrir() {
+    private void abrir() throws IOException {
         if (ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalComprador() != null) {
             aplicacion.Pujas();
         } else {
@@ -186,6 +196,12 @@ public class ControladorMenu implements Initializable {
             btnNombreCrud.setText("Anuncios");
             btnNombreCrud.setPrefWidth(80);
             usuarioLogueado();
+        }
+
+        try {
+            ControladorModelFactory.getInstance().getSubastasQuindio().verificarAnuncios();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
         this.inicializarTabla();

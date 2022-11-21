@@ -31,6 +31,8 @@ public class Aplicacion extends Application {
             Stage stage = new Stage();
             stage.setTitle("Anuncios");
             stage.setScene(scene);
+            ControladorAnuncios controladorAnuncios = fxmlLoader.getController();
+            controladorAnuncios.setStage(stage);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
