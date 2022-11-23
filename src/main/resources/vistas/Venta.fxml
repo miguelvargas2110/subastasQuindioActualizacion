@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.6526104417670683" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.prog3.subastasquindio.controladores.ControladorVentas">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <ImageView fx:id="imgView" fitHeight="193.0" fitWidth="310.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblDescripcion" layoutX="14.0" layoutY="218.0" prefHeight="92.0" prefWidth="310.0" text="Descripcion" />
+            <Label fx:id="lblNombreAnuncio" layoutX="372.0" layoutY="14.0" text="Nombre Anuncio">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNombreAnunciante" layoutX="344.0" layoutY="65.0" text="Nombre del anunciante" />
+            <Label fx:id="lblTipoProducto" layoutX="344.0" layoutY="120.0" text="Tipo del producto" />
+            <Label fx:id="lblFechaInicio" layoutX="344.0" layoutY="175.0" text="Fecha de inicio" />
+            <Label fx:id="lblFechaFin" layoutX="344.0" layoutY="230.0" text="Fecha de finalizacion" />
+            <Label fx:id="lblValorInicial" layoutX="344.0" layoutY="285.0" text="Valor incial" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TableView fx:id="tablaPujasGlobales" prefHeight="170.0" prefWidth="345.0">
+              <columns>
+                <TableColumn fx:id="columnaNombreComprador" prefWidth="75.0" text="Nombre Comprador" />
+                <TableColumn fx:id="columnaValorPuja" prefWidth="75.0" text="Valor Puja" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Button fx:id="btnPujar" layoutX="449.0" layoutY="109.0" mnemonicParsing="false" onAction="#elegirPuja" text="Pujar" />
+            <Label fx:id="lblPuja" alignment="CENTER" layoutX="359.0" layoutY="9.0" prefHeight="35.0" prefWidth="226.0" textAlignment="JUSTIFY" wrapText="true" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
