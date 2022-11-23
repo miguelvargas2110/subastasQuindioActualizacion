@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ControladorTransaccional implements Initializable {
+public class ControladorPujar implements Initializable {
 
     @FXML
     Label lblNombreAnunciante;
@@ -55,6 +55,11 @@ public class ControladorTransaccional implements Initializable {
     Stage stage;
     Aplicacion aplicacion = new Aplicacion();
 
+    /**
+     * Metodo que crea la puja por cierto anuncio
+     *
+     * @throws IOException
+     */
     @FXML
     private void Pujar() throws IOException {
         try {
@@ -119,6 +124,9 @@ public class ControladorTransaccional implements Initializable {
 
     }
 
+    /**
+     * Metodo que inicializa la tabla de CRUD
+     */
     private void inicializarTabla() {
 
         pujas = FXCollections.observableArrayList();

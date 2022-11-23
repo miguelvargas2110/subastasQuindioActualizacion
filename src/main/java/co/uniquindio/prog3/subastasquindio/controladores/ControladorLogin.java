@@ -23,6 +23,9 @@ public class ControladorLogin {
         this.stage = stage;
     }
 
+    /**
+     * Al darle en login verifica los datos que hay en los archivos de texto de usuario y hace las medidas correspondientes
+     */
     @FXML
     public void onActionLogin() {
 

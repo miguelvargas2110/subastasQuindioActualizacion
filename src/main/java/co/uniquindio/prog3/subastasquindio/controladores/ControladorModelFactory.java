@@ -2,10 +2,7 @@ package co.uniquindio.prog3.subastasquindio.controladores;
 
 
 import co.uniquindio.prog3.subastasquindio.excepciones.ExcepcionPujaNegativa;
-import co.uniquindio.prog3.subastasquindio.modelo.Anuncio;
-import co.uniquindio.prog3.subastasquindio.modelo.Puja;
-import co.uniquindio.prog3.subastasquindio.modelo.SubastasQuindio;
-import co.uniquindio.prog3.subastasquindio.modelo.Usuario;
+import co.uniquindio.prog3.subastasquindio.modelo.*;
 import co.uniquindio.prog3.subastasquindio.persistencia.Persistencia;
 
 import java.io.IOException;
@@ -234,5 +231,23 @@ public class ControladorModelFactory {
         Persistencia.guardarPujas(subastasQuindio.getListaPujas());
 
         Persistencia.guardarRecursoSubastasQuindioXML(subastasQuindio);
+    }
+
+    public Venta crearVenta(String comprador, String anunciante, String anuncio, String puja){
+        Venta venta;
+
+        venta = getSubastasQuindio().crearVenta(comprador, anunciante, anuncio, puja);
+
+        return venta;
+    }
+
+    public void guardarVentaArchivo(Venta venta) throws IOException {
+
+        subastasQuindio.getVentas().add(venta);
+
+        Persistencia.guardarVentas(subastasQuindio.getVentas());
+
+        Persistencia.guardarRecursoSubastasQuindioXML(subastasQuindio);
+
     }
 }

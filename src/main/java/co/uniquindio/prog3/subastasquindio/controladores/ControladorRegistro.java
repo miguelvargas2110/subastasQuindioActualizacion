@@ -34,6 +34,11 @@ public class ControladorRegistro {
         crearCliente();
     }
 
+    /**
+     * En base a los datos ingresados se crea un usuario y lo guarda en el achivo de texto
+     *
+     * @throws IOException
+     */
     @FXML
     private void crearCliente() throws IOException {
 
@@ -115,6 +120,12 @@ public class ControladorRegistro {
         }
     }
 
+    /**
+     * Valida que el email contenga @ y . que es lo que tienen la mayoria de emails
+     *
+     * @param email
+     * @throws ExcepcionEmail
+     */
     private void validarEmail(String email) throws ExcepcionEmail {
         if (!email.contains("@")) {
             throw new ExcepcionArrobaEmail();
@@ -123,12 +134,25 @@ public class ControladorRegistro {
         }
     }
 
+    /**
+     * El username debe tener mas de 8 caracteres
+     *
+     * @param nombreUsuario
+     * @throws ExcepcionNombreUsuarioInvalido
+     */
     private void validarUsuario(String nombreUsuario) throws ExcepcionNombreUsuarioInvalido {
         if (nombreUsuario.length() < 8) {
             throw new ExcepcionNombreUsuarioInvalido();
         }
     }
 
+    /**
+     * la contraseña y el usuario deben superar los 8 caracteres
+     *
+     * @param contrasena
+     * @param nombreUsuario
+     * @throws ExcepcionContraseña
+     */
     private void validarContrasena(String contrasena, String nombreUsuario) throws ExcepcionContraseña {
         if (contrasena.length() < 8) {
             if (contrasena.equals(nombreUsuario)) {

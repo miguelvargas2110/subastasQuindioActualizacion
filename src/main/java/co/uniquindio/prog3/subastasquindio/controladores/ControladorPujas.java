@@ -64,6 +64,9 @@ public class ControladorPujas implements Initializable {
 
     };
 
+    /**
+     * Metodo que pone en blanco o en null segun sea el caso cuando se le da al boton cancelar o cuando se termina una operacion del CRUd
+     */
     @FXML
     private void Cancelar() {
         nombreAnuncio.setText("");
@@ -79,6 +82,11 @@ public class ControladorPujas implements Initializable {
         tablaPujas.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Metodo que edita la informacion del anuncio en base a la informacion que tiene este mismo
+     *
+     * @throws IOException
+     */
     @FXML
     private void EditarPuja() {
         Puja pujaSeleccionado = getTablaPujaSeleccionada();
@@ -100,6 +108,11 @@ public class ControladorPujas implements Initializable {
         }
     }
 
+    /**
+     * Metodo que Elimina un anuncio dandole al boton de eliminar anuncio
+     *
+     * @throws IOException
+     */
     @FXML
     private void EliminarPuja() throws IOException {
         Puja pujaSeleccionada = getTablaPujaSeleccionada();
@@ -109,6 +122,9 @@ public class ControladorPujas implements Initializable {
         Cancelar();
     }
 
+    /**
+     * Metodo que inicializa la tabla de CRUD
+     */
     private void inicializarTabla() {
 
         pujas = FXCollections.observableArrayList();
@@ -131,6 +147,11 @@ public class ControladorPujas implements Initializable {
 
     }
 
+    /**
+     * Toma la puja que se selecciono de la tabla con el cursor y lo retorna
+     *
+     * @return
+     */
     public Puja getTablaPujaSeleccionada() {
 
         if (tablaPujas != null) {
@@ -151,6 +172,11 @@ public class ControladorPujas implements Initializable {
 
     }
 
+    /**
+     * Toma la puja seleccionado y en base a esa puja llena automaticamente los espacios de texto para eliminarlo y/o editarlo
+     *
+     * @throws ParseException
+     */
     private void ponerPujaSeleccionada() throws ParseException {
 
         final Puja puja = getTablaPujaSeleccionada();

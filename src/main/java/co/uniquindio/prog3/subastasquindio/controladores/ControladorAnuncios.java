@@ -1,5 +1,6 @@
 package co.uniquindio.prog3.subastasquindio.controladores;
 
+import co.uniquindio.prog3.subastasquindio.aplicacion.Aplicacion;
 import co.uniquindio.prog3.subastasquindio.excepciones.ExcepcionFechaAnuncioInvalida;
 import co.uniquindio.prog3.subastasquindio.modelo.Anuncio;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,10 +26,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ControladorAnuncios implements Initializable {
     ObservableList<String> opcionesChoiceBox = FXCollections.observableArrayList();
@@ -71,6 +70,9 @@ public class ControladorAnuncios implements Initializable {
     private Button btnEditarAnuncio;
     @FXML
     private Button btnEliminarAnuncio;
+
+    Aplicacion aplicacion = new Aplicacion();
+
     private final ListChangeListener<Anuncio> selectorTablaAnuncios = new ListChangeListener<Anuncio>() {
 
         @Override
@@ -93,6 +95,12 @@ public class ControladorAnuncios implements Initializable {
     public ControladorAnuncios() throws IOException {
     }
 
+    /**
+     * Metodo que al pulsar un boton se publique el anuncio guardando la informacion en los respectivos archivos de texto
+     *
+     * @throws ExcepcionFechaAnuncioInvalida
+     * @throws IOException
+     */
     @FXML
     private void PublicarAnuncio() throws ExcepcionFechaAnuncioInvalida, IOException {
         if (txtNombreAnuncio.getText() != "" && txtDescripcionAnuncio.getText() != "" && txtFechaFinalizacionAnuncio.getValue() != null && txtValorInicialAnuncio.getText() != "") {
@@ -124,6 +132,9 @@ public class ControladorAnuncios implements Initializable {
         }
     }
 
+    /**
+     * metodo que guarda la imagen en resources de un producto con el nombre del anuncio y su respectiva extension original
+     */
     private void guardarImagen() {
         try {
             Path origenPath = FileSystems.getDefault().getPath(lblRutaImagen.getText());
@@ -134,6 +145,11 @@ public class ControladorAnuncios implements Initializable {
         }
     }
 
+    /**
+     * Metodo que obtiene la extension de una imagen y la retorna
+     *
+     * @return
+     */
     public String obtenerExtension() {
         String fileName = lblRutaImagen.getText();
         String fe = "";
@@ -151,12 +167,23 @@ public class ControladorAnuncios implements Initializable {
         return fe;
     }
 
+    /**
+     * Metodo que valida si la fecha ingresada es correcta
+     *
+     * @param value
+     * @throws ExcepcionFechaAnuncioInvalida
+     */
     private void validarFecha(LocalDate value) throws ExcepcionFechaAnuncioInvalida {
         if (value.isBefore(LocalDate.now())) {
             throw new ExcepcionFechaAnuncioInvalida();
         }
     }
 
+    /**
+     * Metodo que Elimina un anuncio dandole al boton de eliminar anuncio
+     *
+     * @throws IOException
+     */
     @FXML
     private void EliminarAnuncio() throws IOException {
 
@@ -168,11 +195,16 @@ public class ControladorAnuncios implements Initializable {
 
         ControladorModelFactory.getInstance().guardarRegistroLog("Se ha eliminado el anuncio " + txtNombreAnuncio.getText() + " por el ususario " + ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalAnunciante().getNombre(), 1, "eliminarAnuncio");
 
-        this.inicializarTabla();
+        inicializarTabla();
 
         Cancelar();
     }
 
+    /**
+     * Metodo que edita la informacion del anuncio en base a la informacion que tiene este mismo
+     *
+     * @throws IOException
+     */
     @FXML
     private void EditarAnuncio() throws IOException {
 
@@ -208,6 +240,9 @@ public class ControladorAnuncios implements Initializable {
         }
     }
 
+    /**
+     * Metodo que pone en blanco o en null segun sea el caso cuando se le da al boton cancelar o cuando se termina una operacion del CRUd
+     */
     @FXML
     private void Cancelar() {
 
@@ -226,6 +261,9 @@ public class ControladorAnuncios implements Initializable {
 
     }
 
+    /**
+     * Metodo que toma una imagen que seleccionemos y la carga a archivos
+     */
     @FXML
     private void SubirImagen() {
 
@@ -247,6 +285,9 @@ public class ControladorAnuncios implements Initializable {
         }
     }
 
+    /**
+     * Metodo que inicializa la tabla de CRUD
+     */
     private void inicializarTabla() {
 
         anuncios = FXCollections.observableArrayList();
@@ -264,6 +305,11 @@ public class ControladorAnuncios implements Initializable {
 
     }
 
+    /**
+     * Toma el anuncio que se selecciono de la tabla con el cursor y lo retorna
+     *
+     * @return
+     */
     public Anuncio getTablaAnuncioSeleccionado() {
 
         if (tablaAnuncios != null) {
@@ -289,6 +335,11 @@ public class ControladorAnuncios implements Initializable {
 
     }
 
+    /**
+     * Toma el anuncio seleccionado y en base a ese anuncio llena automaticamente los espacios de texto para eliminarlo y/o editarlo
+     *
+     * @throws ParseException
+     */
     private void ponerAnuncioSeleccionado() throws ParseException {
 
         final Anuncio anuncio = getTablaAnuncioSeleccionado();
@@ -308,6 +359,22 @@ public class ControladorAnuncios implements Initializable {
             btnEditarAnuncio.setDisable(false);
             btnEliminarAnuncio.setDisable(false);
 
+        }
+
+        if (txtFechaFinalizacionAnuncio.getValue().isBefore(LocalDate.now()) && anuncio.getEstadoAnuncio()){
+            Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION);
+            dialogoAlerta.setTitle("");
+            dialogoAlerta.setHeaderText("");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.setContentText("Este anuncio ya se ha cerrado, por favor elija una puja");
+            ButtonType btnElegirPuja = new ButtonType("Elegir puja");
+            dialogoAlerta.getButtonTypes().setAll(btnElegirPuja);
+            Optional<ButtonType> opciones = dialogoAlerta.showAndWait();
+            if (opciones.get() == btnElegirPuja) {
+                aplicacion.Transaccional2();
+                Cancelar();
+                inicializarTabla();
+            }
         }
 
     }

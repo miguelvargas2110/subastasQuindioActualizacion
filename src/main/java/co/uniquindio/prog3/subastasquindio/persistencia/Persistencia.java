@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Persistencia {
     public static final String RUTA_ARCHIVO_USUARIOS = "src/main/resources/persistencia/archivos/archivoUsuarios.txt";
     public static final String RUTA_ARCHIVO_ANUNCIOS = "src/main/resources/persistencia/archivos/archivoAnuncios.txt";
+    public static final String RUTA_ARCHIVO_VENTAS = "src/main/resources/persistencia/archivos/archivoVentas.txt";
     public static final String RUTA_ARCHIVO_PUJA = "src/main/resources/persistencia/archivos/archivoPujas.txt";
     public static final String RUTA_ARCHIVO_LOG = "src/main/resources/persistencia/log/SubastasLog.txt";
     public static final String RUTA_ARCHIVO_OBJETOS = "src/main/resources/persistencia/archivoObjetos.txt";
@@ -25,6 +26,8 @@ public class Persistencia {
         ArrayList<Usuario> usuariosCargados = cargarUsuarios();
 
         ArrayList<Anuncio> anunciosCargados = cargarAnuncios();
+
+        ArrayList<Venta> ventas = cargarVentas();
 
         if (usuariosCargados != null && usuariosCargados.size() > 0)
             subastasQuindio.getListaUsuarios().addAll(usuariosCargados);
@@ -76,6 +79,17 @@ public class Persistencia {
                     anuncio.getEstadoAnuncio() + "\n";
         }
         ArchivoUtil.guardarArchivo(RUTA_ARCHIVO_ANUNCIOS, contenido, false);
+    }
+
+    public static void guardarVentas(ArrayList<Venta> ventas) throws IOException {
+
+        String contenido = "";
+
+        for (Venta venta : ventas) {
+            contenido += venta.getNombreComprador() + "," + venta.getNombreAnunciante() + "," + venta.getNombreAnuncio() + "," +
+                    venta.getValorPuja() +"\n";
+        }
+        ArchivoUtil.guardarArchivo(RUTA_ARCHIVO_VENTAS, contenido, false);
     }
 
     public static void guardarPujas(ArrayList<Puja> listaPujas) throws IOException {
@@ -133,6 +147,23 @@ public class Persistencia {
             }
         }
         return usuarios;
+    }
+
+    public static ArrayList<Venta> cargarVentas() throws FileNotFoundException, IOException {
+        ArrayList<Venta> ventas = new ArrayList<>();
+
+        ArrayList<String> contenido = ArchivoUtil.leerArchivo(RUTA_ARCHIVO_VENTAS);
+        String linea = "";
+
+        for (int i = 0; i < contenido.size(); i++) {
+            linea = contenido.get(i);
+            Venta venta = new Venta();
+            venta.setNombreComprador(linea.split(",")[0]);
+            venta.setNombreAnunciante(linea.split(",")[1]);
+            venta.setNombreAnuncio(linea.split(",")[2]);
+            venta.setValorPuja(linea.split(",")[3]);
+        }
+        return ventas;
     }
 
     public static ArrayList<Anuncio> cargarAnuncios() throws IOException {

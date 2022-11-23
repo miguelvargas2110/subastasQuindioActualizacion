@@ -1,9 +1,6 @@
 package co.uniquindio.prog3.subastasquindio.aplicacion;
 
-import co.uniquindio.prog3.subastasquindio.controladores.ControladorLogin;
-import co.uniquindio.prog3.subastasquindio.controladores.ControladorMenu1;
-import co.uniquindio.prog3.subastasquindio.controladores.ControladorRegistro;
-import co.uniquindio.prog3.subastasquindio.controladores.ControladorTransaccional;
+import co.uniquindio.prog3.subastasquindio.controladores.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,12 +15,12 @@ public class Aplicacion extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Aplicacion.class.getResource("/vistas/Menu1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Aplicacion.class.getResource("/vistas/Menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Menu");
         stage.setScene(scene);
-        ControladorMenu1 controladorMenu1 = fxmlLoader.getController();
-        controladorMenu1.setStage(stage);
+        ControladorMenu controladorMenu = fxmlLoader.getController();
+        controladorMenu.setStage(stage);
         stage.show();
     }
 
@@ -84,14 +81,29 @@ public class Aplicacion extends Application {
     }
 
     public void Transaccional() {
-        FXMLLoader fxmlLoader = new FXMLLoader(Aplicacion.class.getResource("/vistas/Transaccional.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Aplicacion.class.getResource("/vistas/Pujar.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setTitle("Transaccional");
             stage.setScene(scene);
-            ControladorTransaccional controladorTransaccional = fxmlLoader.getController();
-            controladorTransaccional.setStage(stage);
+            ControladorPujar controladorPujar = fxmlLoader.getController();
+            controladorPujar.setStage(stage);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void Transaccional2() {
+        FXMLLoader fxmlLoader = new FXMLLoader(Aplicacion.class.getResource("/vistas/Venta.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Transaccional");
+            stage.setScene(scene);
+            ControladorVentas controladorVentas = fxmlLoader.getController();
+            controladorVentas.setStage(stage);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

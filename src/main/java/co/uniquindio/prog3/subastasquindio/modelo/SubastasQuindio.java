@@ -11,6 +11,7 @@ public class SubastasQuindio implements Serializable {
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     ArrayList<Anuncio> listaAnuncios = new ArrayList<>();
     ArrayList<Puja> listaPujas = new ArrayList<>();
+    ArrayList<Venta> ventas = new ArrayList<>();
     Anunciante usuarioGlobalAnunciante = null;
     Comprador usuarioGlobalComprador = null;
     Anuncio anuncioGlobal = null;
@@ -19,6 +20,14 @@ public class SubastasQuindio implements Serializable {
 
 
     public SubastasQuindio() {
+    }
+
+    public ArrayList<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(ArrayList<Venta> ventas) {
+        this.ventas = ventas;
     }
 
     public ArrayList<Usuario> getListaUsuarios() {
@@ -100,9 +109,22 @@ public class SubastasQuindio implements Serializable {
 
     }
 
+    public Venta crearVenta (String comprador, String anunciante, String anuncio, String puja){
+        Venta venta = new Venta();
+
+        venta.setNombreAnunciante(anunciante);
+        venta.setNombreAnuncio(anuncio);
+        venta.setNombreComprador(comprador);
+        venta.setValorPuja(puja);
+
+        return venta;
+
+    }
+
     public Comprador crearComprador(String nombre, String correo, String contrasena) {
 
         Comprador comprador = new Comprador();
+
         comprador.setNombre(nombre);
         comprador.setCorreo(correo);
         comprador.setContrasena(contrasena);

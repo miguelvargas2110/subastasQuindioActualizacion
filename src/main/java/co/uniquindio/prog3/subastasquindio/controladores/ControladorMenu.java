@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControladorMenu1 implements Initializable {
+public class ControladorMenu implements Initializable {
 
     Aplicacion aplicacion = new Aplicacion();
     ObservableList<Anuncio> anuncios;
@@ -74,6 +74,9 @@ public class ControladorMenu1 implements Initializable {
         ControladorModelFactory.getInstance().getSubastasQuindio().setStageMenu1(stage);
     }
 
+    /**
+     * Metodo que inicializa la tabla de CRUD
+     */
     private void inicializarTabla() {
 
         anuncios = FXCollections.observableArrayList();
@@ -91,6 +94,11 @@ public class ControladorMenu1 implements Initializable {
 
     }
 
+    /**
+     * Toma el anuncio que se selecciono de la tabla con el cursor y lo retorna
+     *
+     * @return
+     */
     public Anuncio getTablaAnuncioSeleccionado() {
 
         if (tablaAnunciosMenu != null) {
@@ -111,6 +119,9 @@ public class ControladorMenu1 implements Initializable {
 
     }
 
+    /**
+     * Hace visible ciertos botones y oculta otros si el usuario ahora es un usuario logueado
+     */
     @FXML
     private void usuarioLogueado() {
         lblNombreUsuario.setLayoutX(400);
@@ -126,6 +137,9 @@ public class ControladorMenu1 implements Initializable {
         btnNombreCrud.setLayoutX(14);
     }
 
+    /**
+     * Al presionar un boton abre la ventana de Pujas o de Anuncio segun sea el usuario que se registro
+     */
     @FXML
     private void abrir() {
         if (ControladorModelFactory.getInstance().getSubastasQuindio().getUsuarioGlobalComprador() != null) {
@@ -135,6 +149,9 @@ public class ControladorMenu1 implements Initializable {
         }
     }
 
+    /**
+     * Hace visible ciertos botones y oculta otros si el usuario ahora es un usuario logueado ademas de cambiar a los usuarios global a null
+     */
     @FXML
     private void logOut() {
         ControladorModelFactory.getInstance().getSubastasQuindio().setUsuarioGlobalAnunciante(null);
